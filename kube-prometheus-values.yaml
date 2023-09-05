@@ -1,0 +1,46 @@
+prometheusOperator:
+  serviceMonitor:
+    relabelings:
+    - action: replace                     #works 
+      sourceLabels: [__metrics_path__]
+      targetLabel: 'mschmitt'
+      replacement: 'istcool'
+kubelet:
+  serviceMonitor:
+    cAdvisorMetricRelabelings:
+    - action: replace                     #works  - must be done
+      sourceLabels: [__metrics_path__]
+      targetLabel: 'mschmitt'
+      replacement: 'istcool'
+    relabelings:
+    - action: replace                     #works 
+      sourceLabels: [__metrics_path__]
+      targetLabel: 'mschmitt'
+      replacement: 'istcool'
+
+prometheus:
+  targetLabels:
+    target: targetBar
+  serviceMonitor:
+    additionalLabels:
+      cluster_from_additional: fantozzi 
+
+  # prometheusSpec:
+  #     additionalScrapeConfigs:    #does not work 
+  #     - job_name: "foo"
+  #       kubernetes_sd_configs:
+  #         - role: node
+  #       relabelings:
+  #       - sourceLabels: [__address__]
+  #         targetLabel: 'promSpec'
+  #         replacement: 'istcool'
+
+kubeApiServer:
+  serviceMonitor:
+   additionalLabels:
+         foo: bar         # also just a cluster label 
+
+commonLabels:               # this is just a kubernetes label :-()
+  clustercc: common_label
+
+
